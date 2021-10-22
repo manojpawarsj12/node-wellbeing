@@ -62,6 +62,7 @@ function prettyTotal(diff) {
 
 
   let sec = Math.floor(ok / 1000);
+  return sec
   let min = Math.floor(sec / 60);
   let hr = Math.floor(sec / 60 / 60);
   hr = hr >= 10 ? hr : '0' + hr;
@@ -70,8 +71,10 @@ function prettyTotal(diff) {
 
   sec = Math.floor(sec % 60);
   sec = sec >= 10 ? sec : '0' + sec;
+  
 
   return hr + ' hours, ' + min + ' mins, ' + sec + ' secs';
+  
 
 
 }

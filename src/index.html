@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="index.css" />
-    <script defer src="track_copy.js"></script>
-  </head>
-  <body class="content">
-    <h1>⚡ Apptracker</h1>
 
-    <button id="startBtn" class="button is-primary">Start</button>
-    <button id="stopBtn" class="button is-warning">Stop</button>
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World!</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"
+    integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="index.css" />
+  <script defer src="track_copy.js"></script>
+  <script defer src="pieChart.js"></script>
+</head>
 
-    <hr />
-    <div id="printdetail"></div>
-    
-      
-    </button>
-  </body>
+<body class="content">
+  <h1>⚡ Apptracker</h1>
+
+  <button id="startBtn" class="button is-primary">Start</button>
+  <button id="stopBtn" class="button is-warning">Stop</button>
+  <button id="showBtn" class="button is-primary">SHow</button>
+
+  <hr />
+  <div id="printdetail"></div>
+  <div id="chart">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  </button>
+</body>
+
 </html>
