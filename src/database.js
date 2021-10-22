@@ -56,23 +56,47 @@ function getDiff(entry) {
   return diff
 }
 
+function prettyTotal(diff) {
+  let ok = diff;
+  
+
+
+  let sec = Math.floor(ok / 1000);
+  let min = Math.floor(sec / 60);
+  let hr = Math.floor(sec / 60 / 60);
+  hr = hr >= 10 ? hr : '0' + hr;
+
+  min = min >= 10 ? min : '0' + min;
+
+  sec = Math.floor(sec % 60);
+  sec = sec >= 10 ? sec : '0' + sec;
+
+  return hr + ' hours, ' + min + ' mins, ' + sec + ' secs';
+
+
+}
+
 async function getTotal(appid) {
   const sql = `SELECT  * from TimeEntry where appid=(?)`;
   let res = await query(sql, [appid]);
 
 
-  console.log(
-    res.reduce((total, entry) => {
+  const result = res.reduce((total, entry) => {
 
-      return total + getDiff(entry)
-    }, 0)
-  );
+    return total + getDiff(entry)
+  }, 0)
 
+  
+  return prettyTotal(result);
+}
+async function getAllApps(){
+  const sql= `SELECT name from App `;
+  let res= await query(sql);
   return res;
 }
-async function run() {
-  const data = await getTotal(1);
-  //console.log(data);
+
+async function run(){
+  console.log(await getAllApps())
 }
-run();
-module.exports = { createTable, InsertApp, InsertTime, AppId, AppExists };
+
+module.exports = { createTable, InsertApp, InsertTime, AppId, AppExists,getTotal,getAllApps};

@@ -9,6 +9,8 @@ const {
   InsertTime,
   AppId,
   AppExists,
+  getTotal,
+  getAllApps,
 } = require("./database");
 const startBtn = document.getElementById("startBtn");
 const stopBtn = document.getElementById("stopBtn");
@@ -18,12 +20,12 @@ const getActiveWin = async () => {
   return await activeWin().getActiveWindow();
 };
 
-const jsonpath = path.join(__dirname, "activities.json");
+let appid;
+
 let previous_window = null;
 let timer;
-let process_list = {};
+
 let start = Date.now();
-let DateObj = new Date(start);
 
 createTable();
 
@@ -41,28 +43,37 @@ async function getActive() {
     let name = previous_window.windowClass;
     let end = Date.now();
     const appexists = await AppExists(name);
-    console.log(appexists,name)
-
 
     if (appexists) {
-      let appid = await AppId(name);
+      appid = await AppId(name);
 
       appid = appid["id"];
-      console.log(appid)
+
       await InsertTime(start, end, appid);
     } else {
       let pid = previous_window.windowPid;
       let windowName = previous_window.windowName;
 
       await InsertApp(name, pid, windowName);
-      let appid = await AppId(name);
+
+      appid = await AppId(name);
       appid = appid["id"];
-      console.log(appid)
+      console.log(appid);
       await InsertTime(start, end, appid);
     }
     start = Date.now();
+    let names = await getAllApps();
+    
+    console.clear();
+    for (let i in names) {
+      //console.log(i);
+      const appname=names[i]['name'];
+      let appid = await AppId(appname);
+      appid=appid["id"]
+      const time = await getTotal(appid)
 
-
+      console.log(`${appname} is used for ${time}`);
+    }
   }
 
   previous_window = current_window;
