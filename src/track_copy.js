@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 
-
 const activeWin = require("electron-active-window");
 
 const {
@@ -36,7 +35,7 @@ async function getActive() {
   //console.log(current_window)
 
   if (current_window === undefined) return;
-  if (current_window === "") return;
+  if (current_window.windowClass === "") return;
 
   if (
     previous_window != null &&
@@ -65,18 +64,20 @@ async function getActive() {
     }
     start = Date.now();
     let names = await getAllApps();
-    names
-    
-    // console.clear();
-    // for (let i in names) {
-    //   //console.log(i);
-    //   const appname=names[i]['name'];
-    //   let appid = await AppId(appname);
-    //   appid=appid["id"]
-    //   const time = await getTotal(appid)
+    names;
 
-    //   console.log(`${appname} is used for ${time}`);
-    // }
+    console.clear();
+    printDiv.innerHTML = "";
+    for (let i in names) {
+      const divv = document.createElement("div")
+      const appname = names[i]["name"];
+      let appid = await AppId(appname);
+      appid = appid["id"];
+      const time = await getTotal(appid);
+      divv.innerHTML = `${appname} is used for ${time}`
+      printDiv.appendChild(divv)
+      console.log(`${appname} is used for ${time}`);
+    }
   }
 
   previous_window = current_window;

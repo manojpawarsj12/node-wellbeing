@@ -1,9 +1,22 @@
 const stowBtn = document.getElementById("showBtn");
 const ctx = document.getElementById("myChart").getContext("2d");
+canvas = document.getElementById('myChart');
 
 const getName = async () => {
     return await getAllApps();
 };
+
+let myChart;
+function createChart(myChart, ctx, config, destroy = false) {
+    if (destroy && myChart) {
+        console.log("oo")
+        myChart.destroy()
+        return
+    }
+    myChart = new Chart(ctx, config);
+    return myChart
+}
+let check = 1; 
 
 const main = async () => {
     let names = await getName();
@@ -13,11 +26,11 @@ const main = async () => {
         labels.push(names[i]["name"]);
         let appid = await AppId(names[i]["name"]);
         appid = appid["id"]
-        const time = await getTotal(appid)
+        const time = await getTotal(appid, secc = true)
         times.push(time)
     }
-    console.log(labels)
-    console.log(times)
+    console.log(times, labels)
+
     const data = {
         labels,
         datasets: [
@@ -34,13 +47,29 @@ const main = async () => {
         options: {
             responsive: true,
         },
+        backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4,
     };
-
-    const myChart = new Chart(ctx,config)
+    
+    
+    
+    if(check & 1){
+        myChart.destroy();
+    }
+    else{
+        myChart = createChart(myChart, ctx, config);
+    }
 
 };
 
 showBtn.onclick = (e) => {
+
+
     main()
+    check++; 
     e.preventDefault();
 };
