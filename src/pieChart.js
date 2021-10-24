@@ -16,23 +16,20 @@ let check = 1;
 const main = async () => {
   let obj = {};
   let names = await getName();
-  let labels = [];
-  let times = [];
+
   for (let i in names) {
-    labels.push(names[i]["name"]);
     let appid = await AppId(names[i]["name"]);
     appid = appid["id"];
     const time = await getTotal(appid, (secc = true));
     obj[names[i]["name"]] = time;
-    times.push(time);
   }
   const sortable = Object.fromEntries(
     Object.entries(obj).sort(([, a], [, b]) => b - a)
   );
   console.log(sortable);
 
-  times = [];
-  labels = [];
+  let labels = [];
+  let times = [];
 
   Object.entries(sortable).forEach(([key, value]) => {
     labels.push(key);
@@ -46,7 +43,7 @@ const main = async () => {
     datasets: [
       {
         data: times,
-        label: "in miliseconds",
+        label: "in seconds",
       },
     ],
   };
