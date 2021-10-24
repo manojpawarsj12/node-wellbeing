@@ -9,18 +9,24 @@
     integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="index.css" />
+  <script defer src="startup.js"></script>
   <script defer src="track_copy.js"></script>
   <script defer src="pieChart.js"></script>
+  
 </head>
 
 <body class="content">
   <h1>⚡ Apptracker</h1>
 
+<div class="buttons">
   <button id="startBtn" class="button is-primary">Start</button>
   <button id="stopBtn" class="button is-warning">Stop</button>
-  <button id="showBtn" class="button is-primary">SHow</button>
-
-  <hr />
+  <button id="showBtn" class="button is-primary">Show</button>
+  <button id="autostartBtn" class="button is-primary">Autostart</button>
+  <button id="Disable-autostartBtn" class="button is-primary">Disable-Autostart</button>
+ 
+</div>
+   <hr />
   <div id="printdetail"></div>
   <div id="chart">
     <canvas id="myChart"></canvas>

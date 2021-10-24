@@ -13,7 +13,7 @@ const {
   getAllApps,
 } = require("./database");
 
-
+const { filterApps } = require("./filterApps");
 
 const startBtn = document.getElementById("startBtn");
 const stopBtn = document.getElementById("stopBtn");
@@ -39,6 +39,8 @@ async function getActive() {
 
   if (current_window === undefined) return;
   if (current_window.windowClass === "") return;
+  if (current_window.windowClass.length === 0) return;
+  filterApps(current_window);
 
   if (
     previous_window != null &&
@@ -97,7 +99,7 @@ startBtn.onclick = (e) => {
 
 stopBtn.onclick = (e) => {
   printDiv.innerHTML = "";
-  startBtn.disabled = false;
+
   clearInterval(timer);
   console.clear();
   console.log("recording stopped");
