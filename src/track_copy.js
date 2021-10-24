@@ -12,6 +12,9 @@ const {
   getTotal,
   getAllApps,
 } = require("./database");
+
+
+
 const startBtn = document.getElementById("startBtn");
 const stopBtn = document.getElementById("stopBtn");
 
@@ -69,13 +72,13 @@ async function getActive() {
     console.clear();
     printDiv.innerHTML = "";
     for (let i in names) {
-      const divv = document.createElement("div")
+      const divv = document.createElement("div");
       const appname = names[i]["name"];
       let appid = await AppId(appname);
       appid = appid["id"];
       const time = await getTotal(appid);
-      divv.innerHTML = `${appname} is used for ${time}`
-      printDiv.appendChild(divv)
+      divv.innerHTML = `${appname} is used for ${time}`;
+      printDiv.appendChild(divv);
       console.log(`${appname} is used for ${time}`);
     }
   }

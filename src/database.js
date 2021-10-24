@@ -56,6 +56,17 @@ function getDiff(entry) {
   return diff
 }
 
+function getDiffForToday(entry) {
+  const dateObj = new Date()
+  let today = dateObj.getDate();
+  let comparingDate = new Date(entry["end"]).getDate()
+  let diff = 0;
+  
+  if (today === comparingDate) { diff = entry["end"] - entry["start"]; }
+
+  return diff
+}
+
 function prettyTotal(diff, secc = false) {
   let ok = diff;
 
@@ -79,18 +90,18 @@ function prettyTotal(diff, secc = false) {
 
 }
 
-async function getTotal(appid,secc=false) {
+async function getTotal(appid, secc = false) {
   const sql = `SELECT  * from TimeEntry where appid=(?)`;
   let res = await query(sql, [appid]);
 
 
   const result = res.reduce((total, entry) => {
 
-    return total + getDiff(entry)
+    return total + getDiffForToday(entry)
   }, 0)
 
 
-  return prettyTotal(result,secc);
+  return prettyTotal(result, secc);
 }
 async function getAllApps() {
   const sql = `SELECT name from App `;

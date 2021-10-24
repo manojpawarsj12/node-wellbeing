@@ -7,12 +7,8 @@ const getName = async () => {
 };
 
 let myChart;
-function createChart(myChart, ctx, config, destroy = false) {
-    if (destroy && myChart) {
-        console.log("oo")
-        myChart.destroy()
-        return
-    }
+function createChart(myChart, ctx, config) {
+
     myChart = new Chart(ctx, config);
     return myChart
 }
