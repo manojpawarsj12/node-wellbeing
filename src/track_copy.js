@@ -32,6 +32,19 @@ let timer;
 let start = Date.now();
 
 createTable();
+function secToDate(sec){
+  let min = Math.floor(sec / 60);
+  let hr = Math.floor(sec / 60 / 60);
+  hr = hr >= 10 ? hr : '0' + hr;
+
+  min = min >= 10 ? min : '0' + min;
+
+  sec = Math.floor(sec % 60);
+  sec = sec >= 10 ? sec : '0' + sec;
+
+
+  return hr + ' hours, ' + min + ' mins, ' + sec + ' secs';
+}
 
 async function getActive() {
   const current_window = await getActiveWin();
@@ -68,21 +81,37 @@ async function getActive() {
       await InsertTime(start, end, appid);
     }
     start = Date.now();
-    let names = await getAllApps();
-    names;
+    
+
 
     console.clear();
     printDiv.innerHTML = "";
+    let obj = {}
+    let names = await getName();
+
+
     for (let i in names) {
-      const divv = document.createElement("div");
-      const appname = names[i]["name"];
-      let appid = await AppId(appname);
-      appid = appid["id"];
-      const time = await getTotal(appid);
-      divv.innerHTML = `${appname} is used for ${time}`;
-      printDiv.appendChild(divv);
-      console.log(`${appname} is used for ${time}`);
+
+
+      let appid = await AppId(names[i]["name"]);
+      appid = appid["id"]
+      const time = await getTotal(appid, secc = true)
+      obj[names[i]["name"]] = time;
+      
     }
+    const sortable = Object.fromEntries(
+      Object.entries(obj).sort(([, a], [, b]) => b - a)
+    );
+    Object.entries(sortable).forEach(([key, value]) => {
+      const divv = document.createElement("div");
+      divv.innerHTML = `${key} is used for ${secToDate(value)}`;
+      printDiv.appendChild(divv);
+      console.log(`${key} is used for ${secToDate(value)}`)
+      
+    });
+
+
+
   }
 
   previous_window = current_window;
